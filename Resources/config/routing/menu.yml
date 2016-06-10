@@ -1,0 +1,3 @@
+#wucdbm_menu_builder_client_dashboard:
+#    path:        /
+#    defaults:    { _controller: WucdbmMenuBuilderBundle:Dashboard:dashboard }

@@ -1,0 +1,29 @@
+{% extends '@WucdbmMenuBuilder/layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            {% if menus|length %}
+                {% for menu in menus %}
+                    <a href="{{ path('wucdbm_menu_builder_menu_edit', {id: menu.id}) }}" class="btn btn-primary btn-block">
+                        {{ menu.name }}
+                    </a>
+                    <p><label class="label label-info">{{ menu.items|length }} URLs</label></p>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info">
+                    <p>
+                        You have no menus yet
+                    </p>
+                    <a href="{{ path('wucdbm_menu_builder_menu_create') }}" class="btn btn-primary">
+                        Create your first
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li>Dashboard</li>
+{% endblock %}

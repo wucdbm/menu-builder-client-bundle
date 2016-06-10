@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wucdbm Menu Builder</title>
+    {% include '@WucdbmMenuBuilderClient/_layout/assets/styles.html.twig' %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/wucdbmmenubuilder/img/menu-icon.ico') }}"/>
+    <link rel="icon" type="image/png" href="{{ asset('bundles/wucdbmmenubuilder/img/menu-icon-128.png') }}"/>
+</head>
+<body>
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('wucdbm_menu_builder_dashboard') }}">
+                <img src="{{ asset('bundles/wucdbmmenubuilder/img/menu-icon-40.png') }}"/>
+            </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="{{ 'wucdbm_menu_builder_dashboard'|isRoute('active') }}">
+                    <a href="{{ path('wucdbm_menu_builder_dashboard') }}">
+                        Dashboard
+                    </a>
+                </li>
+                <li class="{{ 'wucdbm_menu_builder_route_list'|isRoute('active') }}">
+                    <a href="{{ path('wucdbm_menu_builder_route_list') }}">
+                        Route
+                    </a>
+                </li>
+                {# TODO: Remove route parameter pages altogether? We have the parameters @ Routes #}
+                {#<li class="{{ 'wucdbm_menu_builder_route_parameter_list'|isRoute('active') }}">#}
+                    {#<a href="{{ path('wucdbm_menu_builder_route_parameter_list') }}">#}
+                        {#Route Parameters#}
+                    {#</a>#}
+                {#</li>#}
+                <li class="{{ 'wucdbm_menu_builder_menu_list'|isRoute('active') }}">
+                    <a href="{{ path('wucdbm_menu_builder_menu_list') }}">
+                        Menus
+                    </a>
+                </li>
+                {% if false %}
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="{{ 'wucdbm_menu_builder_route_import'|isRoute('active') }}">
+                    <a href="{{ path('wucdbm_menu_builder_route_import') }}" class="ajax-action">
+                        <i class="fa fa-download"></i>
+                        Import
+                    </a>
+                </li>
+                <li class="{{ 'wucdbm_menu_builder_menu_create'|isRoute('active') }}">
+                    <a href="{{ path('wucdbm_menu_builder_menu_create') }}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path('wucdbm_menu_builder_dashboard') }}">Home</a></li>
+        {% block breadcrumb '' %}
+    </ol>
+    {% block content '' %}
+</div>
+
+{% include '@WucdbmMenuBuilder/_layout/assets/scripts.html.twig' %}
+<script type="text/javascript">
+    $(function () {
+        $('.x-editable-text').editable();
+        if (window.frameElement) {
+            var height = $(document).height();
+            if (750 > height) {
+                height = 750;
+            }
+            $(window.frameElement).height(height);
+        }
+        {% block scripts '' %}
+    });
+</script>
+</body>
+</html>

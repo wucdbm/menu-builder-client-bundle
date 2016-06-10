@@ -1,0 +1,7 @@
+wucdbm_menu_builder_client_dashboard:
+    path:        /
+    defaults:    { _controller: MenuBuilderClientBundle:Dashboard:dashboard }
+
+wucdbm_menu_builder_client_menu:
+    resource: routing/menu.yml
+    prefix: /menus
