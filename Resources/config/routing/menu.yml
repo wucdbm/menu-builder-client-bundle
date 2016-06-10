@@ -1,3 +1,28 @@
-#wucdbm_menu_builder_client_dashboard:
-#    path:        /
-#    defaults:    { _controller: WucdbmMenuBuilderBundle:Dashboard:dashboard }
+wucdbm_menu_builder_client_menu_list:
+    path:        /list
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:list }
+
+wucdbm_menu_builder_client_menu_list_row_refresh:
+    path:        /{id}/refresh/row
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:refreshListRow }
+
+wucdbm_menu_builder_client_menu_name_update:
+    path:        /{id}/update/name
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:updateName }
+
+wucdbm_menu_builder_client_menu_create:
+    path:        /create
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:create }
+
+wucdbm_menu_builder_client_menu_edit:
+    path:        /{id}/edit
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:edit }
+
+wucdbm_menu_builder_client_menu_nestable_refresh:
+    path:        /{id}/refresh/nestable
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:refreshNestable }
+
+wucdbm_menu_builder_client_menu_nestable_update:
+    path:        /{id}/nestable/update
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:updateNestable }
+

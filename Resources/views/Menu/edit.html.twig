@@ -1,0 +1,48 @@
+{% extends '@WucdbmMenuBuilderClient/Menu/base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="menu" data-refresh="{{ path('wucdbm_menu_builder_client_menu_nestable_refresh', {id: menu.id}) }}">
+                {% include '@WucdbmMenuBuilderClient/Menu/edit/nestable.html.twig' %}
+            </div>
+        </div>
+        {{ url('wucdbm_menu_builder_client_menu_nestable_update', {id: menu.id}) }}
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    function initNestable() {
+        $('.dd').nestable({
+            maxDepth: 5000
+        }).change(function() {
+            var order = $('.dd').nestable('serialize');
+            $.ajax({
+                url: '{{ path('wucdbm_menu_builder_client_menu_nestable_update', {id: menu.id}) }}',
+                type: 'POST',
+                data: {
+                    order: order
+                },
+                dataType: 'json'
+            }).done(function(data) {
+                $.witter(data.witter);
+            });
+        });
+    }
+    $('#menu').on('refreshed', function() {
+        initNestable();
+    });
+    initNestable();
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        {{ menu.name }}
+    </li>
+    <li>
+        Edit
+    </li>
+{% endblock %}

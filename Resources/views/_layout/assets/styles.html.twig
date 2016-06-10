@@ -1,4 +1,4 @@
-{% stylesheets filter='cssrewrite' filter='?uglifycss' output='css/wucdbm-menu-builder.css'
+{% stylesheets filter='cssrewrite' filter='?uglifycss' output='css/wucdbm-menu-builder-client.css'
 'bundles/wucdbmmenubuilderclient/bootstrap/css/bootstrap.min.css'
 'bundles/wucdbmmenubuilderclient/bootstrap/css/bootstrap-theme.min.css'
 'bundles/wucdbmmenubuilderclient/fontawesome/css/font-awesome.min.css'
@@ -6,8 +6,15 @@
 'bundles/wucdbmmenubuilderclient/select2/css/select2.min.css'
 'bundles/wucdbmmenubuilderclient/magnificPopup/css/magnificPopup.css'
 'bundles/wucdbmmenubuilderclient/bootstrap-editable/css/bootstrap-editable.css'
-'bundles/wucdbmmenubuilderclient/bootstrap-editable/css/address.css'
+'bundles/wucdbmmenubuilderclient/css/nestable.css'
 'bundles/wucdbmmenubuilderclient/css/style.css'
 -%}
 <link rel="stylesheet" href="{{ asset_url }}"/>
 {% endstylesheets %}
+
+{% if false %}
+
+
+'bundles/wucdbmmenubuilderclient/bootstrap-editable/css/address.css'
+
+{% endif %}

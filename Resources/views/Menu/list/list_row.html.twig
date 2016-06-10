@@ -1,0 +1,14 @@
+<td>{{ menu.id }}</td>
+<td>
+    <a href="javascript:;" class="x-editable-text" data-type="text" data-pk="1"
+       data-url="{{ path('wucdbm_menu_builder_client_menu_name_update', {id: menu.id}) }}"
+       data-placement="top" title="Set Menu Name">
+        {{ menu.name }}
+    </a>
+</td>
+<td>{{ menu.items|length }}</td>
+<td>
+    <a href="{{ path('wucdbm_menu_builder_client_menu_edit', {id: menu.id}) }}" class="btn btn-primary">
+        Edit
+    </a>
+</td>

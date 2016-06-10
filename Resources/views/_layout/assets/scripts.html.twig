@@ -1,4 +1,4 @@
-{% javascripts filter='?uglifyjs2' output='js/wucdbm-menu-builder.js'
+{% javascripts filter='?uglifyjs2' output='js/wucdbm-menu-builder-client.js'
 '@WucdbmMenuBuilderClientBundle/Resources/public/jquery-2.1.4.min.js'
 '@WucdbmMenuBuilderClientBundle/Resources/public/bootstrap/js/bootstrap.min.js'
 '@WucdbmMenuBuilderClientBundle/Resources/public/jquery.witter/jquery.witter.js'
@@ -6,6 +6,11 @@
 '@WucdbmMenuBuilderClientBundle/Resources/public/js/jquery.ajaxHandler.js'
 '@WucdbmMenuBuilderClientBundle/Resources/public/js/jquery.blockui.min.js'
 '@WucdbmMenuBuilderClientBundle/Resources/public/select2/js/select2.full.min.js'
+'@WucdbmMenuBuilderClientBundle/Resources/public/bootstrap-editable/js/bootstrap-editable.js'
+'@WucdbmMenuBuilderClientBundle/Resources/public/bootstrap-editable/js/address.js'
+'@WucdbmMenuBuilderClientBundle/Resources/public/bootstrap-editable/js/wysihtml5.js'
+'@WucdbmMenuBuilderClientBundle/Resources/public/nestable/jquery.nestable.js'
+'@WucdbmMenuBuilderClientBundle/Resources/public/js/scripts.js'
 
 -%}
 <script src="{{ asset_url }}" type="text/javascript"></script>
@@ -19,9 +24,5 @@
 
 
 '@WucdbmMenuBuilderClientBundle/Resources/public/js/bootbox.min.js'
-'@WucdbmMenuBuilderClientBundle/Resources/public/bootstrap-editable/js/bootstrap-editable.js'
-'@WucdbmMenuBuilderClientBundle/Resources/public/bootstrap-editable/js/address.js'
-'@WucdbmMenuBuilderClientBundle/Resources/public/bootstrap-editable/js/wysihtml5.js'
-'@WucdbmMenuBuilderClientBundle/Resources/public/js/scripts.js'
 
 {% endif %}

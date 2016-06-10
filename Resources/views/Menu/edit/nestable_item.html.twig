@@ -1,0 +1,8 @@
+<li class="dd-item" data-id="{{ item.id }}">
+    <div class="dd-handle">{{ item.name }} - {{ item.id }}</div>
+    <ol class="dd-list">
+        {% for child in item.children %}
+            {% include _self with {item: child} %}
+        {% endfor %}
+    </ol>
+</li>

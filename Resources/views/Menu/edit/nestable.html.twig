@@ -1,0 +1,7 @@
+<div class="dd">
+    <ol class="dd-list">
+        {% for item in menu|menuTopLevelItems %}
+            {% include '@WucdbmMenuBuilderClient/Menu/edit/nestable_item.html.twig' %}
+        {% endfor %}
+    </ol>
+</div>

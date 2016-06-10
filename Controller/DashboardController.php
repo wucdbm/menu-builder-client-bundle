@@ -24,7 +24,7 @@ class DashboardController extends BaseController {
             'menus' => $menus
         ];
 
-        return $this->render('@MenuBuilderClient/Dashboard/dashboard.html.twig', $data);
+        return $this->render('@WucdbmMenuBuilderClient/Dashboard/dashboard.html.twig', $data);
     }
 
 }

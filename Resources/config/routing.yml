@@ -1,6 +1,6 @@
 wucdbm_menu_builder_client_dashboard:
     path:        /
-    defaults:    { _controller: MenuBuilderClientBundle:Dashboard:dashboard }
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Dashboard:dashboard }
 
 wucdbm_menu_builder_client_menu:
     resource: routing/menu.yml

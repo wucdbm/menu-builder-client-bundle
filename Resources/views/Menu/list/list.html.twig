@@ -1,0 +1,52 @@
+{% extends '@WucdbmMenuBuilderClient/Menu/base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            {% form_theme filterForm '@WucdbmMenuBuilderClient/_shared/form/filter_theme.html.twig' %}
+            {{ form(filterForm) }}
+
+            {% if menus|length > 0 %}
+                <div class="flip-scroll">
+                    <table class="table table-bordered table-striped table-condensed flip-content">
+                        <thead class="flip-content">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Items</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for menu in menus %}
+                            <tr data-refresh="{{ path('wucdbm_menu_builder_client_menu_list_row_refresh', {id: menu.id}) }}">
+                                {% include '@WucdbmMenuBuilderClient/Menu/list/list_row.html.twig' %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <p>No menus found</p>
+                    <a href="{{ path('wucdbm_menu_builder_client_menu_create') }}" class="btn btn-primary">
+                        Create one
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        {% include '@WucdbmMenuBuilderClient/_shared/pagination.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        List
+    </li>
+{% endblock %}
