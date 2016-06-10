@@ -1,0 +1,22 @@
+{
+    "name": "wucdbm/menu-builder-client-bundle",
+    "type": "symfony-bundle",
+    "description": "A client for the Menu Builder Bundle",
+    "keywords": ["wucdbm", "menu", "builder", "menu builder", "symfony2"],
+    "authors": [
+        {
+            "name": "Martin Kirilov",
+            "email": "wucdbm@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "~5.5",
+        "wucdbm/wucdbm-bundle": "~3.0",
+        "symfony/symfony": "~2.8|~3.0"
+    },
+    "autoload": {
+        "psr-4": { "Wucdbm\\Bundle\\MenuBuilderClientBundle\\": "" }
+    },
+    "license": "GPL-3.0"
+}
