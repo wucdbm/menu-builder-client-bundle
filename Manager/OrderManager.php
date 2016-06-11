@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the MenuBuilderBundle package.
+ * This file is part of the MenuBuilderClientBundle package.
  *
  * (c) Martin Kirilov <wucdbm@gmail.com>
  *
@@ -30,8 +30,6 @@ class OrderManager extends Manager {
         foreach ($menu->getItems() as $item) {
             $map[$item->getId()] = $item;
         }
-
-        $menu->setName('test'.time());
 
         foreach ($order as $ord => $firstLevel) {
             $this->_order($map, $firstLevel, $ord);

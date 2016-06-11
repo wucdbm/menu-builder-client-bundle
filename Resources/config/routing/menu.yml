@@ -26,3 +26,31 @@ wucdbm_menu_builder_client_menu_nestable_update:
     path:        /{id}/nestable/update
     defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:updateNestable }
 
+wucdbm_menu_builder_client_menu_remove:
+    path:        /{id}/remove
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:remove }
+
+wucdbm_menu_builder_client_menu_items_add:
+    path:        /{id}/items/add
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:addItem }
+
+wucdbm_menu_builder_client_menu_items_add_by_route:
+    path:        /{id}/items/add/{routeId}
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:addItemByRoute }
+
+wucdbm_menu_builder_client_menu_item:
+    resource: menu/item.yml
+    prefix: /{id}/items
+
+wucdbm_menu_builder_client_menu_item_edit:
+    path:        /{id}/items/{itemId}/edit
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:editItem }
+
+wucdbm_menu_builder_client_menu_item_add_sub_by_route:
+    path:        /{id}/items/sub/{itemId}/add/{routeId}
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:addSubItemByRoute }
+
+wucdbm_menu_builder_client_menu_item_add_sub:
+    path:        /{id}/items/{itemId}/sub/add
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:addSubItem }
+

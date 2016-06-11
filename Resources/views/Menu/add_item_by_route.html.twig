@@ -1,0 +1,87 @@
+{% extends '@WucdbmMenuBuilderClient/Menu/base.html.twig' %}
+
+{% macro itemParent(item) %}
+    {% if item.parent %}
+        {{ _self.itemParent(item.parent) }}
+    {% endif %}
+    <li rel="popover" title="{{ item.name }}" data-content="{{ item.route|routeName }}">
+        <code>{{ item.name }}</code>
+    </li>
+{% endmacro %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            {% form_theme form '@WucdbmMenuBuilderClient/_shared/form/form_theme.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.name) }}
+            {% if form.parameters|length %}
+                {{ form_row(form.parameters) }}
+            {% else %}
+                <div class="hidden">
+                    {{ form_row(form.parameters) }}
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">
+                    Add / Edit Item
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    {% for field in form.parameters %}
+        {% if field.value.vars.choices is defined %}
+            $('#{{ field.value.vars.id }}').select2({
+                tags: true,
+                createTag: function(tag) {
+                    return {
+                        id: tag.term,
+                        text: 'New: ' + tag.term
+                    };
+                }
+            });
+        {% endif %}
+    {% endfor %}
+
+    {#{% import '@WucdbmMenuBuilder/_shared/collection_macro.html.twig' as macro %}#}
+
+    {#{{ macro.collection(form.parameters) }}#}
+
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        <a href="{{ path('wucdbm_menu_builder_client_menu_edit', {id: menu.id}) }}">
+            {{ menu.name }}
+        </a>
+    </li>
+    <li>
+        Items
+    </li>
+    {% if not item.id %}
+        <li>
+            Add
+        </li>
+    {% endif %}
+    {% if item.parent %}
+        {{ _self.itemParent(item.parent) }}
+    {% endif %}
+    <li>
+        {{ route|routeName }}
+        {#{% if route.name %}#}
+            {#{{ route.name }}#}
+            {#(<code>{{ route.route }}</code>)#}
+        {#{% else %}#}
+            {#<code>{{ route.route }}</code>#}
+        {#{% endif %}#}
+    </li>
+{% endblock %}

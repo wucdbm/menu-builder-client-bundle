@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the MenuBuilderBundle package.
+ * This file is part of the MenuBuilderClientBundle package.
  *
  * (c) Martin Kirilov <wucdbm@gmail.com>
  *

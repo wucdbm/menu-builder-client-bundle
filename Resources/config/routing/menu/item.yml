@@ -1,0 +1,7 @@
+wucdbm_menu_builder_client_menu_item_remove:
+    path:        /{itemId}/remove
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu/Item:removeItem }
+
+wucdbm_menu_builder_client_menu_item_name_update:
+    path:        /items/{itemId}/update/name
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu/Item:updateItemName }
