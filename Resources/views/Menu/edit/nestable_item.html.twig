@@ -37,7 +37,7 @@
             <a href="javascript:;" class="x-editable-text" data-type="text" data-pk="1"
                data-url="{{ path('wucdbm_menu_builder_client_menu_item_name_update', {id: menu.id, itemId: item.id}) }}"
                data-placement="top" title="Set Item Name">
-                {{ item.name }}
+                {{ item.name }} {{ item.ord }}
             </a>
             <a href="{{ path('wucdbm_menu_builder_client_menu_item_add_sub', {id: menu.id, itemId: item.id}) }}" class="btn btn-link btn-xs pull-right"
                rel="tooltip" title="Add nested item">
