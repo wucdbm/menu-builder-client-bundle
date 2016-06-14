@@ -1,0 +1,73 @@
+{% extends '@WucdbmMenuBuilderClient/Menu/base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="menu" data-refresh="{{ path('wucdbm_menu_builder_client_menu_nestable_refresh', {id: menu.id}) }}">
+                {% include '@WucdbmMenuBuilderClient/Menu/nestable/nestable.html.twig' %}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            {% form_theme form '@WucdbmMenuBuilderClient/_shared/form/form_theme.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    Save
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    function initNestable() {
+        $('.dd').nestable({
+            maxDepth: 5000
+        }).change(function() {
+            var order = $('.dd').nestable('serialize');
+            $.ajax({
+                url: '{{ path('wucdbm_menu_builder_client_menu_nestable_update', {id: menu.id}) }}',
+                type: 'POST',
+                data: {
+                    order: order
+                },
+                dataType: 'json'
+            }).done(function(data) {
+                $.witter(data.witter);
+                {#$('#menu').trigger('refresh');#}
+            });
+        });
+    }
+    $('#menu').on('refreshed', function() {
+        initNestable();
+        $('.x-editable-text').editable();
+    });
+    initNestable();
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li>
+        {{ menu.name }}
+    </li>
+    <li>
+        Edit
+    </li>
+    <li class="pull-right">
+        <a href="{{ path('wucdbm_menu_builder_client_menu_items_add', {id: menu.id}) }}">
+            <i class="fa fa-plus"></i>
+            Add Item
+        </a>
+    </li>
+    <li class="pull-right">
+        <a href="{{ path('wucdbm_menu_builder_client_menu_remove', {id: menu.id}) }}"
+           data-confirm="Should Menu '{{ menu.name }}' be removed?">
+            <i class="fa fa-times"></i>
+            Remove Menu
+        </a>
+    </li>
+{% endblock %}

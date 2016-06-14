@@ -14,9 +14,9 @@ wucdbm_menu_builder_client_menu_create:
     path:        /create
     defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:create }
 
-wucdbm_menu_builder_client_menu_edit:
-    path:        /{id}/edit
-    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:edit }
+wucdbm_menu_builder_client_menu_nestable:
+    path:        /{id}/nestable/sort
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:nestable }
 
 wucdbm_menu_builder_client_menu_nestable_refresh:
     path:        /{id}/refresh/nestable
@@ -25,6 +25,18 @@ wucdbm_menu_builder_client_menu_nestable_refresh:
 wucdbm_menu_builder_client_menu_nestable_update:
     path:        /{id}/nestable/update
     defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:updateNestable }
+
+wucdbm_menu_builder_client_menu_sortable:
+    path:        /{id}/sortable/sort
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:sortable }
+
+wucdbm_menu_builder_client_menu_sortable_refresh:
+    path:        /{id}/refresh/sortable
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:refreshSortable }
+
+wucdbm_menu_builder_client_menu_sortable_update:
+    path:        /{id}/sortable/update
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:updateSortable }
 
 wucdbm_menu_builder_client_menu_remove:
     path:        /{id}/remove

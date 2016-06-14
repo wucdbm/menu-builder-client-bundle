@@ -30,7 +30,7 @@ class ItemController extends BaseController {
             ]);
         }
 
-        return $this->redirectToRoute('wucdbm_menu_builder_client_menu_edit', [
+        return $this->redirectToRoute('wucdbm_menu_builder_client_menu_nestable', [
             'id' => $menu->getId()
         ]);
     }

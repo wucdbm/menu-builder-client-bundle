@@ -1,0 +1,27 @@
+<li data-id="{{ item.id }}">
+    <div class="sortable-actions">
+        <a href="javascript:;" class="x-editable-text" data-type="text" data-pk="1"
+           data-url="{{ path('wucdbm_menu_builder_client_menu_item_name_update', {id: menu.id, itemId: item.id}) }}"
+           data-placement="top" title="Set Item Name">
+            {{ item.name }}
+        </a>
+        <a href="{{ path('wucdbm_menu_builder_client_menu_item_add_sub', {id: menu.id, itemId: item.id}) }}" class="btn btn-link btn-xs pull-right"
+           rel="tooltip" title="Add nested item">
+            <i class="fa fa-plus"></i>
+        </a>
+        <a href="{{ path('wucdbm_menu_builder_client_menu_item_edit', {id: menu.id, itemId: item.id}) }}" class="btn btn-link btn-xs pull-right"
+           rel="tooltip" title="Edit this item">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a href="{{ item|menuItemPath }}" class="btn btn-link btn-xs pull-right" rel="tooltip" title="Visit this item's page" target="_blank">
+            <i class="fa fa-anchor"></i>
+        </a>
+        <a href="{{ path('wucdbm_menu_builder_client_menu_item_remove', {id: menu.id, itemId: item.id}) }}" data-confirm="Should Item '{{ item.name }}' be deleted?"
+           class="btn btn-link btn-xs pull-right" rel="tooltip" title="Remove this element and all of its children">
+            <i class="fa fa-times"></i>
+        </a>
+    </div>
+    <ol class="vertical">{% for child in item.children %}
+            {% include _self with {item: child} %}
+        {% endfor %}</ol>
+</li>

@@ -24,21 +24,21 @@ class OrderManager extends Manager {
         $this->manager = $manager;
     }
 
-    public function order(Menu $menu, array $order) {
+    public function orderNestable(Menu $menu, array $array) {
         $map = [];
         /** @var MenuItem $item */
         foreach ($menu->getItems() as $item) {
             $map[$item->getId()] = $item;
         }
 
-        foreach ($order as $ord => $firstLevel) {
-            $this->_order($map, $firstLevel, $ord);
+        foreach ($array as $ord => $order) {
+            $this->_orderNestable($map, $order, $ord);
         }
 
         $this->manager->save($menu);
     }
 
-    protected function _order($map, $order, $ord, MenuItem $parent = null) {
+    protected function _orderNestable($map, $order, $ord, MenuItem $parent = null) {
         /** @var MenuItem $item */
         $item = $map[$order['id']];
         $item->setParent($parent);
@@ -46,8 +46,40 @@ class OrderManager extends Manager {
         if (isset($order['children'])) {
             /** @var MenuItem $child */
             foreach ($order['children'] as $ord => $child) {
-                $this->_order($map, $child, $ord, $item);
+                $this->_orderNestable($map, $child, $ord, $item);
             }
+        }
+    }
+
+    public function orderSortable(Menu $menu, array $array) {
+        $map = [];
+        /** @var MenuItem $item */
+        foreach ($menu->getItems() as $item) {
+            $map[$item->getId()] = $item;
+        }
+
+        $this->_orderSortable($map, $array);
+
+        $this->manager->save($menu);
+    }
+
+    protected function _orderSortable($map, $order, $ord = null, MenuItem $parent = null) {
+        if (isset($order['id'])) {
+            /** @var MenuItem $item */
+            $item = $map[$order['id']];
+            $item->setParent($parent);
+            $item->setOrd($ord);
+            if (isset($order['children'])) {
+                /** @var MenuItem $child */
+                foreach ($order['children'] as $ord => $child) {
+                    $this->_orderSortable($map, $child, $ord, $item);
+                }
+            }
+
+            return;
+        }
+        foreach ($order as $ord => $child) {
+            $this->_orderSortable($map, $child, $ord, $parent);
         }
     }
 

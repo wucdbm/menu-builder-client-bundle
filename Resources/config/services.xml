@@ -2,23 +2,11 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="wucdbm_menu_builder_client.order_route">wucdbm_menu_builder_client_menu_sortable</parameter>
+    </parameters>
+
     <services>
-
-        <!-- Array cache instance -->
-        <!--<service id="wucdbm_menu_builder_client.cache.local" class="Wucdbm\Bundle\WucdbmBundle\Cache\Storage\ArrayStorage" public="false"/>-->
-        <!-- Alias your own cache implementation of Wucdbm\Bundle\WucdbmBundle\Cache\Storage\AbstractStorage to this -->
-        <!-- And it will be available for services that use persistent cache and as $this->cache in managers that extend abstract -->
-        <!--<service id="wucdbm_menu_builder_client.cache.persistent" alias="wucdbm.cache.local" public="false"/>-->
-
-        <!-- Managers -->
-        <!--<service id="wucdbm_menu_builder.manager.abstract" class="Wucdbm\Bundle\MenuBuilderBundle\Manager\Manager" abstract="true">-->
-            <!--<call method="setCache">-->
-                <!--<argument type="service" id="wucdbm_menu_builder.cache.persistent" strict="false"/>-->
-            <!--</call>-->
-            <!--<call method="setLocalCache">-->
-                <!--<argument type="service" id="wucdbm_menu_builder.cache.local" strict="false"/>-->
-            <!--</call>-->
-        <!--</service>-->
 
         <service id="wucdbm_menu_builder_client.manager.order" class="Wucdbm\Bundle\MenuBuilderClientBundle\Manager\OrderManager" parent="wucdbm_menu_builder.manager.abstract">
             <argument type="service" id="wucdbm_menu_builder.manager.menus"/>

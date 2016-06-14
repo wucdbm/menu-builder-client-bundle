@@ -60,7 +60,7 @@
 {% block breadcrumb %}
     {{ parent() }}
     <li>
-        <a href="{{ path('wucdbm_menu_builder_client_menu_edit', {id: menu.id}) }}">
+        <a href="{{ path('wucdbm_menu_builder_client_menu_nestable', {id: menu.id}) }}">
             {{ menu.name }}
         </a>
     </li>

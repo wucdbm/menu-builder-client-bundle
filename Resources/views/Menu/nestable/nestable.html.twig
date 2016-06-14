@@ -1,0 +1,18 @@
+{% if menu|menuTopLevelItems|length %}
+    <div class="dd">
+        <ol class="dd-list">
+            {% for item in menu|menuTopLevelItems %}
+                {% include '@WucdbmMenuBuilderClient/Menu/nestable/nestable_item.html.twig' %}
+            {% endfor %}
+        </ol>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <p>This menu does not have any items yet</p>
+        <br/>
+        <a href="{{ path('wucdbm_menu_builder_client_menu_items_add', {id: menu.id}) }}" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            Create your first
+        </a>
+    </div>
+{% endif %}

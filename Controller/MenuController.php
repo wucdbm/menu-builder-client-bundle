@@ -76,7 +76,9 @@ class MenuController extends BaseController {
             $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
             $manager->save($menu);
 
-            return $this->redirectToRoute('wucdbm_menu_builder_client_menu_edit', [
+            $route = $this->getParameter('wucdbm_menu_builder_client.order_route');
+
+            return $this->redirectToRoute($route, [
                 'id' => $menu->getId()
             ]);
         }
@@ -89,15 +91,18 @@ class MenuController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/create.html.twig', $data);
     }
 
-    public function editAction($id) {
+    public function nestableAction($id) {
         $repo = $this->get('wucdbm_menu_builder.repo.menus');
         $menu = $repo->findOneById($id);
+        
+        $form = $this->createForm(CreateType::class, $menu);
 
         $data = [
-            'menu' => $menu
+            'menu' => $menu,
+            'form' => $form->createView()
         ];
 
-        return $this->render('@WucdbmMenuBuilderClient/Menu/edit.html.twig', $data);
+        return $this->render('@WucdbmMenuBuilderClient/Menu/nestable.html.twig', $data);
     }
 
     public function refreshNestableAction(Menu $menu) {
@@ -105,7 +110,7 @@ class MenuController extends BaseController {
             'menu' => $menu
         ];
 
-        return $this->render('@WucdbmMenuBuilderClient/Menu/edit/nestable.html.twig', $data);
+        return $this->render('@WucdbmMenuBuilderClient/Menu/nestable/nestable.html.twig', $data);
     }
 
     public function updateNestableAction(Menu $menu, Request $request) {
@@ -122,7 +127,61 @@ class MenuController extends BaseController {
 
         try {
             $manager = $this->container->get('wucdbm_menu_builder_client.manager.order');
-            $manager->order($menu, $order);
+            $manager->orderNestable($menu, $order);
+
+            return $this->json([
+                'witter' => [
+                    'title' => 'Success',
+                    'text'  => 'Menu reordered successfully'
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'witter' => [
+                    'title' => sprintf('Error: Uncaught %s', get_class($e)),
+                    'text'  => $e->getMessage()
+                ]
+            ]);
+        }
+    }
+
+    public function sortableAction($id) {
+        $repo = $this->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
+        
+        $form = $this->createForm(CreateType::class, $menu);
+
+        $data = [
+            'menu' => $menu,
+            'form' => $form->createView()
+        ];
+
+        return $this->render('@WucdbmMenuBuilderClient/Menu/sortable.html.twig', $data);
+    }
+
+    public function refreshSortableAction(Menu $menu) {
+        $data = [
+            'menu' => $menu
+        ];
+
+        return $this->render('@WucdbmMenuBuilderClient/Menu/sortable/sortable.html.twig', $data);
+    }
+
+    public function updateSortableAction(Menu $menu, Request $request) {
+        $order = $request->request->get('order');
+
+        if (!is_array($order)) {
+            return $this->json([
+                'witter' => [
+                    'title' => 'Error',
+                    'text'  => 'Submitted is not an array.'
+                ]
+            ]);
+        }
+
+        try {
+            $manager = $this->container->get('wucdbm_menu_builder_client.manager.order');
+            $manager->orderSortable($menu, $order);
 
             return $this->json([
                 'witter' => [
@@ -225,7 +284,9 @@ class MenuController extends BaseController {
             $repo = $this->container->get('wucdbm_menu_builder.repo.menus_items');
             $repo->save($item);
 
-            return $this->redirectToRoute('wucdbm_menu_builder_client_menu_edit', [
+            $route = $this->container->getParameter('wucdbm_menu_builder_client.order_route');
+            
+            return $this->redirectToRoute($route, [
                 'id' => $item->getMenu()->getId()
             ]);
         }

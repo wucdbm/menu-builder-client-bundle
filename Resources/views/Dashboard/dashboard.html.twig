@@ -2,20 +2,28 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             {% if menus|length %}
                 {% for menu in menus %}
-                    <a href="{{ path('wucdbm_menu_builder_menu_edit', {id: menu.id}) }}" class="btn btn-primary btn-block">
-                        {{ menu.name }}
-                    </a>
-                    <p><label class="label label-info">{{ menu.items|length }} URLs</label></p>
+                    <div class="btn-group btn-group-justified">
+                        <a href="javascript:;" class="btn btn-default">
+                            {{ menu.name }} - {{ menu.items|length }} URLs
+                        </a>
+                        <a href="{{ path('wucdbm_menu_builder_client_menu_nestable', {id: menu.id}) }}" class="btn btn-primary" rel="tooltip" title="Sort with the Nestable JavaScript plugin">
+                            Nestable
+                        </a>
+                        <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id}) }}" class="btn btn-primary">
+                            Sortable
+                        </a>
+                    </div>
+                    <br/>
                 {% endfor %}
             {% else %}
                 <div class="alert alert-info">
                     <p>
                         You have no menus yet
                     </p>
-                    <a href="{{ path('wucdbm_menu_builder_menu_create') }}" class="btn btn-primary">
+                    <a href="{{ path('wucdbm_menu_builder_client_menu_create') }}" class="btn btn-primary">
                         Create your first
                     </a>
                 </div>
