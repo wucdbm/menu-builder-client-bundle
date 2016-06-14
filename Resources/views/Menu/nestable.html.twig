@@ -3,12 +3,12 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <div id="menu" data-refresh="{{ path('wucdbm_menu_builder_client_menu_nestable_refresh', {id: menu.id}) }}">
                 {% include '@WucdbmMenuBuilderClient/Menu/nestable/nestable.html.twig' %}
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             {% form_theme form '@WucdbmMenuBuilderClient/_shared/form/form_theme.html.twig' %}
             {{ form_start(form) }}
             {{ form_rest(form) }}

@@ -5,12 +5,12 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <div id="menu" data-refresh="{{ path('wucdbm_menu_builder_client_menu_sortable_refresh', {id: menu.id}) }}">
                 {% include '@WucdbmMenuBuilderClient/Menu/sortable/sortable.html.twig' %}
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             {% form_theme form '@WucdbmMenuBuilderClient/_shared/form/form_theme.html.twig' %}
             {{ form_start(form) }}
             {{ form_rest(form) }}
@@ -28,7 +28,7 @@
 {% block scripts %}
     function initSortable() {
         var group = $('.sortable-root').sortable({
-            placeholder: $('<li class="placeholder"/>').text('Menu will drop here'),
+            placeholder: $('<li class="placeholder"/>').text('Item will be placed here'),
             onDrop: function ($item, container, _super) {
                 $(container.el).removeClass('hover');
 

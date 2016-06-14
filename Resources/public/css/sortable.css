@@ -247,11 +247,11 @@ ol.vertical-custom li.placeholder:before {
 ol.vertical-simple {
     margin: 0 0 9px 0;
     min-height: 10px;
-    padding-left: 0;
+    padding: 0;
 }
 
 ol.vertical-simple  .dragged {
-    opacity: 1;
+    opacity: 0.6;
 }
 
 ol.vertical-simple ol.vertical-simple {
@@ -263,16 +263,13 @@ ol.vertical-simple:empty {
     display: none;
 }
 
-/** TODO: The following two are a pretty nice addition, if we know the receiving element **/
 ol.vertical-simple.hover, ol.vertical-simple ol.vertical-simple.hover {
     border-left: 1px solid red;
-    /*margin-left: 14px;*/
-    /*padding-left: 15px;*/
     margin-left: 0;
-    padding-left: 29px;
+    padding: 0 0 0 29px;
 }
 
-ol.vertical-simple.hover li > div.sortable-actions {
+ol.vertical-simple.hover > li > div.sortable-actions {
     position: relative;
 }
 
@@ -283,16 +280,20 @@ ol.vertical-simple.hover > li > div.sortable-actions:before {
     width: 0;
     height: 0;
     margin-top: 0;
-    /*left: -14px;*/
     top: 8px;
     border: 7px solid transparent;
     border-left-color: red;
     border-right: none;
 }
 
-ol.vertical-simple.hover li.placeholder:before {
+ol.vertical-simple.hover > li.dragged > div.sortable-actions:before {
+    /* Sometimes, the dragged element is hovered over its original container */
+    /* We just don't want it to have an arrow */
+    display: none;
+}
+
+ol.vertical-simple.hover > li.placeholder:before {
     left: -18px;
-    /*left: -12px;*/
 }
 
 ol.vertical-simple li {
@@ -327,15 +328,16 @@ ol.vertical-simple li.placeholder {
     margin: 5px 0 5px 0;
     padding: 5px;
     border: 1px solid #cccccc;
-    color: red;
+    color: #fff;
     background: #fafafa;
-    background: -webkit-linear-gradient(top, #fafafa 0%, #eee 100%);
-    background: -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
-    background: linear-gradient(top, #fafafa 0%, #eee 100%);
+    background: -webkit-linear-gradient(top, #fc0 0%, #f00 100%);
+    background: -moz-linear-gradient(top, #fc0 0%, #f00 100%);
+    background: linear-gradient(top, #fc0 0%, #f00 100%);
     -webkit-border-radius: 3px;
     border-radius: 3px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    text-shadow: 1px 1px #000;
 }
 
 ol.vertical-simple li.placeholder:before {
