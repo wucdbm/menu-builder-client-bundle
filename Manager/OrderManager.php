@@ -58,28 +58,23 @@ class OrderManager extends Manager {
             $map[$item->getId()] = $item;
         }
 
-        $this->_orderSortable($map, $array);
+        foreach ($array as $ord => $order) {
+            $this->_orderSortable($map, $order, $ord);
+        }
 
         $this->manager->save($menu);
     }
 
     protected function _orderSortable($map, $order, $ord = null, MenuItem $parent = null) {
-        if (isset($order['id'])) {
-            /** @var MenuItem $item */
-            $item = $map[$order['id']];
-            $item->setParent($parent);
-            $item->setOrd($ord);
-            if (isset($order['children'])) {
-                /** @var MenuItem $child */
-                foreach ($order['children'] as $ord => $child) {
-                    $this->_orderSortable($map, $child, $ord, $item);
-                }
+        /** @var MenuItem $item */
+        $item = $map[$order['id']];
+        $item->setParent($parent);
+        $item->setOrd($ord);
+        if (isset($order['children'])) {
+            /** @var MenuItem $child */
+            foreach ($order['children'] as $ord => $child) {
+                $this->_orderSortable($map, $child, $ord, $item);
             }
-
-            return;
-        }
-        foreach ($order as $ord => $child) {
-            $this->_orderSortable($map, $child, $ord, $parent);
         }
     }
 
