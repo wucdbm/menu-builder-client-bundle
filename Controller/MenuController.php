@@ -145,6 +145,8 @@ class MenuController extends BaseController {
         }
     }
 
+    // add the css class of the containing elements to this route with requirements one of all three
+    // then make links to all 3 in the menu dash / menu list
     public function sortableAction($id) {
         $repo = $this->get('wucdbm_menu_builder.repo.menus');
         $menu = $repo->findOneById($id);
