@@ -1,5 +1,5 @@
 {% if menu|menuTopLevelItems|length %}
-    <ol class="sortable-root vertical">
+    <ol class="sortable-root {{ class }}">
         {% for item in menu|menuTopLevelItems %}
             {% include '@WucdbmMenuBuilderClient/Menu/sortable/sortable_item.html.twig' %}
         {% endfor %}

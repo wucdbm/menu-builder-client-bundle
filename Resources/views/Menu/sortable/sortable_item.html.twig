@@ -21,7 +21,5 @@
             <i class="fa fa-times"></i>
         </a>
     </div>
-    <ol class="vertical">{% for child in item.children %}
-            {% include _self with {item: child} %}
-        {% endfor %}</ol>
+    <ol class="{{ class }}">{% for child in item.children %}{% include _self with {item: child} %}{% endfor %}</ol>
 </li>

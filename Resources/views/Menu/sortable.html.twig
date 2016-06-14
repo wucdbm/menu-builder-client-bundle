@@ -1,5 +1,7 @@
 {% extends '@WucdbmMenuBuilderClient/Menu/base.html.twig' %}
 
+{% set class = 'vertical-simple' %}
+
 {% block content %}
 
     <div class="row">
@@ -28,6 +30,8 @@
         var group = $('.sortable-root').sortable({
             placeholder: $('<li class="placeholder"/>').text('Menu will drop here'),
             onDrop: function ($item, container, _super) {
+                $(container.el).removeClass('hover');
+
                 var order = group.sortable("serialize").get();
 
                 $.ajax({
@@ -53,6 +57,10 @@
                     id: $($parent).data('id'),
                     children: $children
                 };
+            },
+            afterMove: function ($placeholder, container, $closestItemOrContainer) {
+                $('.{{ class }}').removeClass('hover');
+                $(container.el).addClass('hover');
             }
         });
     }
