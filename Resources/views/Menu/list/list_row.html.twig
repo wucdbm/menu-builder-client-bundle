@@ -9,6 +9,11 @@
 <td>{{ menu.items|length }}</td>
 <td>
     <a href="{{ path('wucdbm_menu_builder_client_menu_nestable', {id: menu.id}) }}" class="btn btn-primary">
-        Edit
+        Nestable
+    </a>
+</td>
+<td>
+    <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id}) }}" class="btn btn-primary">
+        Sortable
     </a>
 </td>
