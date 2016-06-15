@@ -43,7 +43,13 @@ wucdbm_menu_builder_client_menu_sortable_update:
 wucdbm_menu_builder_client_menu_remove:
     path:        /{id}/remove
     defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:remove }
+    requirements:
+        id: \d+
 
 wucdbm_menu_builder_client_menu_item:
     resource: menu/item.yml
     prefix: /{id}/items
+
+wucdbm_menu_builder_client_menu_item_remove:
+    path:        /items/remove
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu:removeItem }

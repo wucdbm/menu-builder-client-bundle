@@ -123,25 +123,6 @@ class ItemController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/Item/create/create.html.twig', $data);
     }
 
-    public function removeItemAction(Menu $menu, $itemId, Request $request) {
-        $menuItemRepository = $this->container->get('wucdbm_menu_builder.repo.menus_items');
-        $item = $menuItemRepository->findOneById($itemId);
-        $menuItemRepository->remove($item);
-
-        if ($request->isXmlHttpRequest()) {
-            return $this->json([
-                'success' => true,
-                'refresh' => true
-            ]);
-        }
-
-        $route = $this->container->getParameter('wucdbm_menu_builder_client.order_route');
-
-        return $this->redirectToRoute($route, [
-            'id' => $menu->getId()
-        ]);
-    }
-
     public function updateItemNameAction($id, $itemId, Request $request) {
         $post = $request->request;
         // name, value, pk

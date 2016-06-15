@@ -70,6 +70,60 @@
             }
             $(window.frameElement).height(height);
         }
+        $(document).on('click', '.remove-button', function() {
+            var name = $(this).data('name');
+            var message = name ? "How should link <span class=\"label label-info\">" + name + "</span> be removed?" : "Remove link";
+            var id = $(this).data('id');
+            var itemId = $(this).data('item-id');
+            if (!id || !itemId) {
+                bootbox.alert('id or itemId is not set');
+                return;
+            }
+            var that = this;
+            function removeItem(id, itemId, isFull) {
+                $.ajax({
+                    url: '{{ path('wucdbm_menu_builder_client_menu_item_remove') }}',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        itemId: itemId,
+                        isFull: isFull
+                    },
+                    dataType: 'json'
+                }).done(function(data) {
+                    $.ajaxHandler.handle(data, that);
+                    $(that).trigger('refresh');
+                });
+            }
+            bootbox.dialog({
+                message: message,
+                title: "Remove link",
+
+                buttons: {
+                    all: {
+                        label: "Remove with children",
+                        className: "btn-danger",
+                        callback: function() {
+                            removeItem(id, itemId, 1);
+                        }
+                    },
+                    one: {
+                        label: "Remove link only",
+                        className: "btn-success",
+                        callback: function() {
+                            removeItem(id, itemId, 0);
+                        }
+                    },
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-default pull-left",
+                        callback: function() {
+                            // nothing
+                        }
+                    }
+                }
+            });
+        });
         {% block scripts '' %}
     });
 </script>

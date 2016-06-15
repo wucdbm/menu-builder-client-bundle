@@ -17,8 +17,7 @@
             <a href="{{ item|menuItemPath }}" class="btn btn-link btn-xs pull-right" rel="tooltip" title="Visit this item's page" target="_blank">
                 <i class="fa fa-anchor"></i>
             </a>
-            <a href="{{ path('wucdbm_menu_builder_client_menu_item_remove', {id: menu.id, itemId: item.id}) }}" data-confirm="Should Item '{{ item.name }}' be deleted?"
-               class="btn btn-link btn-xs pull-right" rel="tooltip" title="Remove this element and all of its children">
+            <a href="javascript:;" class="remove-button btn btn-link btn-xs pull-right" data-id="{{ menu.id }}" data-item-id="{{ item.id }}" data-name="{{ item.name }}">
                 <i class="fa fa-times"></i>
             </a>
         </div>
@@ -50,8 +49,7 @@
             <a href="{{ item|menuItemPath }}" class="btn btn-link btn-xs pull-right" rel="tooltip" title="Visit this item's page" target="_blank">
                 <i class="fa fa-anchor"></i>
             </a>
-            <a href="{{ path('wucdbm_menu_builder_client_menu_item_remove', {id: menu.id, itemId: item.id}) }}" data-confirm="Should Item '{{ item.name }}' be deleted?"
-               class="btn btn-link btn-xs pull-right" rel="tooltip" title="Remove this element and all of its children">
+            <a href="javascript:;" class="remove-button btn btn-link btn-xs pull-right" data-id="{{ menu.id }}" data-item-id="{{ item.id }}" data-name="{{ item.name }}">
                 <i class="fa fa-times"></i>
             </a>
         </div>
