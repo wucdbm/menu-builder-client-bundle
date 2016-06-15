@@ -105,7 +105,12 @@ $(function () {
             type: 'ajax',
             // alignTop: true,
             overflowY: 'scroll', // as we know that popup content is tall we set scroll overflow by default to avoid jump
-            focus: 'input, select, textarea'
+            focus: 'input, select, textarea',
+            callbacks: {
+                beforeOpen: function () {
+                    this.wrap.removeAttr('tabindex');
+                }
+            }
         }).magnificPopup('open');
     });
     jQuery(document).on('submit', 'form[data-mfp], .mfp-content form', function () {
@@ -179,4 +184,7 @@ $(function () {
         $(this).parents('form').submit();
     });
     $('select.select2').select2();
+    $.ajaxHandler.addHandler('refreshMenu', function() {
+        $('#menuContainer').trigger('refresh');
+    });
 });

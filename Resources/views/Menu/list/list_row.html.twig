@@ -8,12 +8,36 @@
 </td>
 <td>{{ menu.items|length }}</td>
 <td>
-    <a href="{{ path('wucdbm_menu_builder_client_menu_nestable', {id: menu.id}) }}" class="btn btn-primary">
+    <a href="{{ path('wucdbm_menu_builder_client_menu_nestable', {id: menu.id}) }}" class="btn btn-default">
         Nestable
     </a>
 </td>
 <td>
-    <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id}) }}" class="btn btn-primary">
-        Sortable
-    </a>
+    <div class="btn-group">
+        <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id}) }}" class="btn btn-primary">
+            Sortable
+        </a>
+        {#<button type="button" class="btn btn-danger">Action</button>#}
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id, class: 'vertical-simple'}) }}">
+                    Simple
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id, class: 'vertical-custom'}) }}">
+                    Custom
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id, class: 'vertical'}) }}">
+                    Vertical
+                </a>
+            </li>
+        </ul>
+    </div>
 </td>

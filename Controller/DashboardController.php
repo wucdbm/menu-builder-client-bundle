@@ -16,15 +16,7 @@ use Wucdbm\Bundle\WucdbmBundle\Controller\BaseController;
 class DashboardController extends BaseController {
 
     public function dashboardAction() {
-        $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
-
-        $menus = $manager->findAll();
-
-        $data = [
-            'menus' => $menus
-        ];
-
-        return $this->render('@WucdbmMenuBuilderClient/Dashboard/dashboard.html.twig', $data);
+        return $this->render('@WucdbmMenuBuilderClient/Dashboard/dashboard.html.twig');
     }
 
 }

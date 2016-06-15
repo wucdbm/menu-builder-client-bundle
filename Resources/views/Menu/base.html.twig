@@ -6,4 +6,11 @@
             Menus
         </a>
     </li>
+    {% if menu is defined %}
+        <li>
+            <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id}) }}">
+                {{ menu.name }}
+            </a>
+        </li>
+    {% endif %}
 {% endblock %}

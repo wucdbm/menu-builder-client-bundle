@@ -31,3 +31,36 @@ body {
 .btn .label.pull-right, .btn .label.pull-right {
     top: 2px;
 }
+
+.mfp-close-btn-in .mfp-close {
+    text-shadow: 1px 1px 20px #fff, -1px -1px 20px #fff;
+    color: #222;
+    border: 1px solid #eee;
+    border-radius: 25px;
+    width: 35px;
+    height: 35px;
+    line-height: 34px;
+    top: 56px;
+    right: 5px;
+}
+
+.mfp-content {
+    padding-top: 56px;
+    margin-bottom: 15px;
+}
+
+.mfp-content .container {
+    background: #fff;
+}
+
+.mfp-content .container > div:first-child {
+    margin-top: 20px;
+}
+
+.breadcrumb > li > a {
+    outline: none;
+}
+
+.no-margin-top {
+    margin-top: 0;
+}

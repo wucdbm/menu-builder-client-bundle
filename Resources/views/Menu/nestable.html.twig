@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-sm-9">
-            <div id="menu" data-refresh="{{ path('wucdbm_menu_builder_client_menu_nestable_refresh', {id: menu.id}) }}">
+            <div id="menuContainer" data-refresh="{{ path('wucdbm_menu_builder_client_menu_nestable_refresh', {id: menu.id}) }}">
                 {% include '@WucdbmMenuBuilderClient/Menu/nestable/nestable.html.twig' %}
             </div>
         </div>
@@ -38,11 +38,11 @@
                 dataType: 'json'
             }).done(function(data) {
                 $.witter(data.witter);
-                {#$('#menu').trigger('refresh');#}
+                {#$('#menuContainer').trigger('refresh');#}
             });
         });
     }
-    $('#menu').on('refreshed', function() {
+    $('#menuContainer').on('refreshed', function() {
         initNestable();
         $('.x-editable-text').editable();
     });
@@ -55,10 +55,10 @@
         {{ menu.name }}
     </li>
     <li>
-        Edit
+        Nestable
     </li>
     <li class="pull-right">
-        <a href="{{ path('wucdbm_menu_builder_client_menu_items_add', {id: menu.id}) }}">
+        <a href="{{ path('wucdbm_menu_builder_client_menu_item_choose_route', {id: menu.id}) }}" class="ajax-action">
             <i class="fa fa-plus"></i>
             Add Item
         </a>

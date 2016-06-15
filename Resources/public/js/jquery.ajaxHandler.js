@@ -64,6 +64,11 @@
                 items: {
                     src: html, // can be a HTML string, jQuery object, or CSS selector
                     type: 'inline'
+                },
+                callbacks: {
+                    beforeOpen: function () {
+                        this.wrap.removeAttr('tabindex');
+                    }
                 }
             });
         },

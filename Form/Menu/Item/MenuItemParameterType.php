@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu;
+namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\Item;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

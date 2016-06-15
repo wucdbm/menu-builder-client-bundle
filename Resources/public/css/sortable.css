@@ -56,7 +56,6 @@ ol li.highlight {
     color: #999999;
 }
 
-/** TODO: This? **/
 ol li.highlight i.icon-move {
     background-image: url("../img/glyphicons-halflings-white.png");
 }

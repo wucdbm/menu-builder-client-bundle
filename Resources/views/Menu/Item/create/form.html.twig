@@ -1,0 +1,17 @@
+{% form_theme form '@WucdbmMenuBuilderClient/_shared/form/form_theme.html.twig' %}
+{{ form_start(form, {action: action}) }}
+{{ form_errors(form) }}
+{{ form_row(form.name) }}
+{% if form.parameters|length %}
+    {{ form_row(form.parameters) }}
+{% else %}
+    <div class="hidden">
+        {{ form_row(form.parameters) }}
+    </div>
+{% endif %}
+<div class="form-group">
+    <button type="submit" class="btn btn-default">
+        Add Item
+    </button>
+</div>
+{{ form_end(form) }}

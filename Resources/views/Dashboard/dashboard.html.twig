@@ -2,32 +2,8 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-9">
-            {% if menus|length %}
-                {% for menu in menus %}
-                    <div class="btn-group btn-group-justified">
-                        <a href="javascript:;" class="btn btn-default">
-                            {{ menu.name }} - {{ menu.items|length }} URLs
-                        </a>
-                        <a href="{{ path('wucdbm_menu_builder_client_menu_nestable', {id: menu.id}) }}" class="btn btn-primary" rel="tooltip" title="Sort with the Nestable JavaScript plugin">
-                            Nestable
-                        </a>
-                        <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id}) }}" class="btn btn-primary">
-                            Sortable
-                        </a>
-                    </div>
-                    <br/>
-                {% endfor %}
-            {% else %}
-                <div class="alert alert-info">
-                    <p>
-                        You have no menus yet
-                    </p>
-                    <a href="{{ path('wucdbm_menu_builder_client_menu_create') }}" class="btn btn-primary">
-                        Create your first
-                    </a>
-                </div>
-            {% endif %}
+        <div class="col-sm-12">
+
         </div>
     </div>
 {% endblock %}

@@ -3,5 +3,27 @@ wucdbm_menu_builder_client_menu_item_remove:
     defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu/Item:removeItem }
 
 wucdbm_menu_builder_client_menu_item_name_update:
-    path:        /items/{itemId}/update/name
+    path:        /{itemId}/update/name
     defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu/Item:updateItemName }
+
+wucdbm_menu_builder_client_menu_item_choose_route:
+    path:        /add/choose-route/{parentId}
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu/Item:chooseRoute, parentId: null }
+    requirements:
+        id: \d+
+        parentId: \d+
+
+wucdbm_menu_builder_client_menu_item_add:
+    path:        /add/{routeId}/{parentId}
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu/Item:addItem, parentId: null }
+    requirements:
+        id: \d+
+        routeId: \d+
+        parentId: \d+
+
+wucdbm_menu_builder_client_menu_item_edit:
+    path:        /{itemId}/edit
+    defaults:    { _controller: WucdbmMenuBuilderClientBundle:Menu/Item:editItem }
+    requirements:
+        id: \d+
+        itemId: \d+

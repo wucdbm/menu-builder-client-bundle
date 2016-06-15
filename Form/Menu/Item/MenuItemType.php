@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu;
+namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\Item;
 
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,7 +30,7 @@ class MenuItemType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Display name - this will be displayed as the text of the generated hyperlink'
+                'label' => 'Display name - this will be displayed as the text of the generated link'
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -104,7 +104,8 @@ class MenuItemType extends AbstractType {
             /** @var MenuItem $item */
             $item = $event->getData();
             $form->add('parameters', CollectionType::class, [
-                // TODO: Make it possible to add custom parameters with custom names
+                'label' => 'URL Parameters',
+                // TODO: Make it possible to add custom parameters with custom names?
 //                'allow_add'    => true,
 //                'allow_delete' => true,
                 'entry_type'    => MenuItemParameterType::class,
@@ -128,6 +129,7 @@ class MenuItemType extends AbstractType {
             /** @var MenuItemParameter $menuParameter */
             foreach ($item->getParameters() as $menuParameter) {
                 $menuParameter->setItem($item);
+                // is this still needed?
             }
         });
     }

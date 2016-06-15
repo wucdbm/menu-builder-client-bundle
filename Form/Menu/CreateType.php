@@ -11,25 +11,27 @@
 
 namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wucdbm\Bundle\MenuBuilderBundle\Entity\Menu;
 use Wucdbm\Bundle\WucdbmBundle\Form\AbstractType;
 
 class CreateType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
-                'label' => 'Menu name - something easy to remember',
+            ->add('name', TextType::class, [
+                'label' => 'Menu name',
                 'attr'  => [
-                    'placeholder' => 'Menu name - something easy to remember'
+                    'placeholder' => 'Menu name'
                 ]
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => 'Wucdbm\Bundle\MenuBuilderBundle\Entity\Menu'
+            'data_class' => Menu::class
         ]);
     }
 

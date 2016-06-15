@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu;
+namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\Item;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wucdbm\Bundle\MenuBuilderBundle\Entity\MenuItem;
 use Wucdbm\Bundle\MenuBuilderBundle\Entity\Route;
 use Wucdbm\Bundle\MenuBuilderBundle\Repository\RouteRepository;
 use Wucdbm\Bundle\WucdbmBundle\Form\AbstractType;
@@ -21,8 +23,8 @@ class RouteChoiceType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('route', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-                'label'         => 'Please select a page for your new menu item',
+            ->add('route', EntityType::class, [
+                'label'         => 'Please select a page for your new link',
                 'class'         => 'Wucdbm\Bundle\MenuBuilderBundle\Entity\Route',
                 'query_builder' => function (RouteRepository $repository) {
                     return $repository->getPublicRoutesQueryBuilder();
@@ -40,7 +42,7 @@ class RouteChoiceType extends AbstractType {
 
                     return sprintf('%s (%s)', implode(' ', $words), $route->getRoute());
                 },
-                'placeholder'   => 'Choose page',
+                'placeholder'   => 'Select page',
                 'attr'          => [
                     'class' => 'select2'
                 ]
@@ -49,7 +51,7 @@ class RouteChoiceType extends AbstractType {
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => 'Wucdbm\Bundle\MenuBuilderBundle\Entity\MenuItem'
+            'data_class' => MenuItem::class
         ]);
     }
 

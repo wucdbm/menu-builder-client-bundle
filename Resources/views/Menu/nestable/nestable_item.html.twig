@@ -6,7 +6,7 @@
                data-placement="top" title="Set Item Name">
                 {{ item.name }}
             </a>
-            <a href="{{ path('wucdbm_menu_builder_client_menu_item_add_sub', {id: menu.id, itemId: item.id}) }}" class="btn btn-link btn-xs pull-right"
+            <a href="{{ path('wucdbm_menu_builder_client_menu_item_choose_route', {id: menu.id, parentId: item.id}) }}" class="btn btn-link btn-xs pull-right"
                rel="tooltip" title="Add nested item">
                 <i class="fa fa-plus"></i>
             </a>
@@ -39,11 +39,11 @@
                data-placement="top" title="Set Item Name">
                 {{ item.name }}
             </a>
-            <a href="{{ path('wucdbm_menu_builder_client_menu_item_add_sub', {id: menu.id, itemId: item.id}) }}" class="btn btn-link btn-xs pull-right"
+            <a href="{{ path('wucdbm_menu_builder_client_menu_item_choose_route', {id: menu.id, parentId: item.id}) }}" class="ajax-action btn btn-link btn-xs pull-right"
                rel="tooltip" title="Add nested item">
                 <i class="fa fa-plus"></i>
             </a>
-            <a href="{{ path('wucdbm_menu_builder_client_menu_item_edit', {id: menu.id, itemId: item.id}) }}" class="btn btn-link btn-xs pull-right"
+            <a href="{{ path('wucdbm_menu_builder_client_menu_item_edit', {id: menu.id, itemId: item.id}) }}" class="ajax-action btn btn-link btn-xs pull-right"
                rel="tooltip" title="Edit this item">
                 <i class="fa fa-edit"></i>
             </a>
