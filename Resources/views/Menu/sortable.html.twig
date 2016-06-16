@@ -72,9 +72,6 @@
 {% block breadcrumb %}
     {{ parent() }}
     <li>
-        {{ menu.name }}
-    </li>
-    <li>
         Sortable
     </li>
     <li class="pull-right">
@@ -83,11 +80,13 @@
             Add Item
         </a>
     </li>
-    <li class="pull-right">
-        <a href="{{ path('wucdbm_menu_builder_client_menu_remove', {id: menu.id}) }}"
-           data-confirm="Should Menu '{{ menu.name }}' be removed?">
-            <i class="fa fa-times"></i>
-            Remove Menu
-        </a>
-    </li>
+    {% if not menu.isSystem %}
+        <li class="pull-right">
+            <a href="{{ path('wucdbm_menu_builder_client_menu_remove', {id: menu.id}) }}"
+               data-confirm="Should Menu '{{ menu.name }}' be removed?">
+                <i class="fa fa-times"></i>
+                Remove Menu
+            </a>
+        </li>
+    {% endif %}
 {% endblock %}

@@ -11,6 +11,7 @@
 
 namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\Item;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -62,6 +63,8 @@ class MenuItemType extends AbstractType {
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($builder) {
             $duplicateValidator = function ($object, ExecutionContextInterface $context) use ($builder) {
+                // this constraint has to be moved to this form's options
+                // then set its error path to properties
                 /** @var MenuItem $item */
                 $item = $builder->getData();
                 $duplicates = [];
@@ -77,6 +80,8 @@ class MenuItemType extends AbstractType {
             };
 
             $requiredValidator = function ($object, ExecutionContextInterface $context) use ($builder) {
+                // this constraint has to be moved to this form's options
+                // then set its error path to properties
                 /** @var MenuItem $item */
                 $item = $builder->getData();
                 $route = $item->getRoute();
@@ -104,7 +109,7 @@ class MenuItemType extends AbstractType {
             /** @var MenuItem $item */
             $item = $event->getData();
             $form->add('parameters', CollectionType::class, [
-                'label' => 'URL Parameters',
+                'label'         => 'URL Parameters',
                 // TODO: Make it possible to add custom parameters with custom names?
 //                'allow_add'    => true,
 //                'allow_delete' => true,
@@ -121,6 +126,17 @@ class MenuItemType extends AbstractType {
                     ])
                 ]
             ]);
+
+//            $route = $item->getRoute();
+//            /** @var RouteParameter $parameter */
+//            foreach ($route->getParameters() as $parameter) {
+//                if ('_locale' == $parameter->getParameter()) {
+//                    $form->add('useCurrentLocale', CheckboxType::class, [
+//                        'label' => 'Use the current locale if available'
+//                    ]);
+//                    break;
+//                }
+//            }
         });
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
@@ -129,7 +145,7 @@ class MenuItemType extends AbstractType {
             /** @var MenuItemParameter $menuParameter */
             foreach ($item->getParameters() as $menuParameter) {
                 $menuParameter->setItem($item);
-                // is this still needed?
+                // is this still needed? Maybe if we add some dynamically
             }
         });
     }
@@ -141,6 +157,10 @@ class MenuItemType extends AbstractType {
     }
 
     public function getName() {
-        return 'wucdbm_menu_builder_menu_item';
+        return 'menu_builder_client_bundle_form_menu_item_menu_item';
+    }
+
+    public function getBlockPrefix() {
+        return 'menu_builder_client_bundle_form_menu_item_menu_item';
     }
 }

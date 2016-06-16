@@ -14,17 +14,3 @@
     {% if form.parent %}</span>{% else %}</div>{% endif %}
     {%- endif %}
 {%- endblock form_errors %}
-
-{% block wucdbm_menu_builder_client_menu_item_parameter_widget -%}
-    {{ form_errors(form) }}
-    <div class="form-group">
-        <div class="row">
-            <div class="col-xs-6">
-                {{ form_row(form.value) }}
-            </div>
-            <div class="col-xs-6">
-                {{ form_row(form.parameter) }}
-            </div>
-        </div>
-    </div>
-{%- endblock wucdbm_menu_builder_client_menu_item_parameter_widget %}

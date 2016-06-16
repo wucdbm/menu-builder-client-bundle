@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Wucdbm\Bundle\MenuBuilderBundle\Entity\Menu;
 use Wucdbm\Bundle\MenuBuilderBundle\Filter\Menu\MenuFilter;
-use Wucdbm\Bundle\MenuBuilderBundle\Form\Menu\FilterType;
+use Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\FilterType;
 use Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\CreateType;
 use Wucdbm\Bundle\WucdbmBundle\Controller\BaseController;
 
@@ -75,9 +75,17 @@ class MenuController extends BaseController {
 
             $route = $this->getParameter('wucdbm_menu_builder_client.order_route');
 
-            return $this->redirectToRoute($route, [
+            $url = $this->generateUrl($route, [
                 'id' => $menu->getId()
             ]);
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'redirect' => $url
+                ]);
+            }
+
+            return $this->redirect($url);
         }
 
         $data = [
@@ -85,7 +93,13 @@ class MenuController extends BaseController {
             'menu' => $menu
         ];
 
-        return $this->render('@WucdbmMenuBuilderClient/Menu/create.html.twig', $data);
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'mfp' => $this->renderView('@WucdbmMenuBuilderClient/Menu/create/create_popup.html.twig', $data)
+            ]);
+        }
+
+        return $this->render('@WucdbmMenuBuilderClient/Menu/create/create.html.twig', $data);
     }
 
     public function nestableAction($id) {

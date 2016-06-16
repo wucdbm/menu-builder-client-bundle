@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -45,6 +46,7 @@ class MenuItemParameterType extends AbstractType {
                 $choices[] = $rawData['value'];
                 $form->remove('value');
                 $this->addValueChoiceField($form, $choices, $data->getParameter());
+                $data->setUseValueFromContext(false);
             }
         });
 
@@ -60,7 +62,7 @@ class MenuItemParameterType extends AbstractType {
                 // and configure it to check the RouteParameter for default value first
                 // before falling back to the current one
                 $data->setValue($parameter->getDefaultValue());
-                $data->setUseDefaultValue(true);
+                $data->setUseValueFromContext(true);
             }
         });
 
@@ -74,7 +76,7 @@ class MenuItemParameterType extends AbstractType {
             $requirement = $parameter->getRequirement();
             $choices = $this->getChoices($requirement);
 
-            if ($data->getUseDefaultValue() && $parameter->getDefaultValue()) {
+            if ($data->getUseValueFromContext() && $parameter->getDefaultValue()) {
                 // if editing a MenuItem that has a default value that has not been removed from the RouteParameter
                 // You would generally want to update the current default value of RouteParameter in the MenuItemParameter
                 // This will also force the form to display an empty text box, or pre-selected placeholder of the select field
@@ -88,7 +90,6 @@ class MenuItemParameterType extends AbstractType {
                 $this->addValueTextField($form, $parameter);
             }
 
-            $parameterName = $this->getParameterName($parameter);
             $form
                 ->add('parameter', EntityType::class, [
                     'class'         => 'Wucdbm\Bundle\MenuBuilderBundle\Entity\RouteParameter',
@@ -105,11 +106,6 @@ class MenuItemParameterType extends AbstractType {
 
                         return $repository->getParametersByRouteQueryBuilder($route);
                     },
-                    'attr'          => [
-                        'rel'          => 'popover',
-                        'title'        => $parameterName,
-                        'data-content' => sprintf('Parameter %s with requirements %s', $parameterName, $this->getRegexPattern($requirement))
-                    ],
                     'constraints'   => [
                         new NotBlank([
                             'message' => 'This value is required'
@@ -152,15 +148,125 @@ class MenuItemParameterType extends AbstractType {
         return '#^(' . $requirement . ')$#';
     }
 
+    protected function generate($array) {
+        $shouldYield = true;
+        $progress = [];
+        $remaining = $array;
+        foreach ($array as $key => $element) {
+            unset($remaining[$key]);
+            if (is_array($element)) {
+                $shouldYield = false;
+                foreach ($element as $subElement) {
+                    $copy = array_values($progress);
+                    $copy[] = $subElement;
+                    foreach ($remaining as $remain) {
+                        $copy[] = $remain;
+                    }
+                    foreach ($this->generate($copy) as $val) {
+                        yield $val;
+                    }
+                }
+                break;
+            }
+            $progress[] = $element;
+        }
+        if ($shouldYield) {
+            yield implode('', $array);
+        }
+    }
+
+    protected function buildChoicesArray(&$stringArray) {
+        $current = '';
+        $array = [];
+        foreach ($stringArray as $key => $character) {
+            unset($stringArray[$key]);
+            if ('(' == $character) {
+                if ($current) {
+                    $array[] = $current;
+                    $current = '';
+                }
+                $array[] = $this->buildChoicesArray($stringArray);
+                continue;
+            }
+            if (')' == $character) {
+                if ($current) {
+                    $array[] = $current;
+                    $current = '';
+                }
+                break;
+            }
+            if ('|' == $character) {
+                if ($current) {
+                    $array[] = $current;
+                    $current = '';
+                }
+                continue;
+            }
+            $current .= $character;
+        }
+
+        if ($current) {
+            $array[] = $current;
+        }
+
+        return $array;
+    }
+
+    protected function buildRequirementsArray($string) {
+        $current = '';
+        $level = 0;
+        $array = [];
+
+        foreach ($string as $key => $character) {
+            if ('(' == $character) {
+                $level++;
+            }
+            if (')' == $character) {
+                $level--;
+            }
+            if (0 === $level && '|' == $character) {
+                if ($current) {
+                    $array[] = $current;
+                    $current = '';
+                }
+                continue;
+            }
+            $current .= $character;
+        }
+
+        if ($current) {
+            $array[] = $current;
+        }
+
+        return $array;
+    }
+
     protected function getChoices($requirement) {
         if (false === strpos($requirement, '|')) {
             return [];
         }
 
-        $choices = explode('|', $requirement);
-        foreach ($choices as $key => $choice) {
-            if (false !== strpbrk($choice, '.+*?')) {
-                unset($choices[$key]);
+        $choices = [];
+
+        $arr = str_split($requirement);
+        $requirements = $this->buildRequirementsArray($arr);
+
+        foreach ($requirements as $req) {
+            if (false !== strpbrk($req, '.+*?')) {
+                // maybe figure out how to handle these types of requirements
+                continue;
+            }
+            if (false === strpos($req, '|')) {
+                $choices[] = $req;
+                continue;
+            }
+            if (false !== strpbrk($req, '()')) {
+                $arr = str_split($req);
+                $test = $this->buildChoicesArray($arr);
+                $generated = $this->generate($test);
+                foreach ($generated as $choice) {
+                    $choices[] = $choice;
+                }
             }
         }
 
@@ -170,8 +276,10 @@ class MenuItemParameterType extends AbstractType {
     protected function addValueChoiceField(FormInterface $form, $choices, RouteParameter $parameter) {
         $parameterName = $parameter->getName() ? $parameter->getName() : $parameter->getParameter();
         $placeholder = 'Please select one or create a new value if allowed by requirement';
-        if ($parameter->getDefaultValue()) {
-            $placeholder = sprintf('Dynamic value (Default: %s)', $parameter->getDefaultValue());
+        if ('_locale' == $parameter->getParameter() && $parameter->getDefaultValue()) {
+            $placeholder = sprintf('Always use the current locale', $parameter->getDefaultValue());
+        } elseif ($parameter->getDefaultValue()) {
+            $placeholder = sprintf('Use default (currently  %s)', $parameter->getDefaultValue());
         }
         $options = [
             'label'       => sprintf('Value for parameter "%s"', $parameterName),
@@ -186,7 +294,7 @@ class MenuItemParameterType extends AbstractType {
             $options['constraints'][] = $this->createNotBlankConstraint();
             $options['required'] = true;
         }
-        $form->add('value', 'Wucdbm\Bundle\MenuBuilderBundle\Form\Menu\MenuItemParameterChoiceType', $options);
+        $form->add('value', MenuItemParameterChoiceType::class, $options);
     }
 
     protected function addValueTextField(FormInterface $form, RouteParameter $parameter) {
@@ -203,13 +311,21 @@ class MenuItemParameterType extends AbstractType {
 
         $form
             ->add('value', TextType::class, [
-                'label'       => $defaultValue ? sprintf('Value for "%s", leave blank for dynamic fallback (current: %s)', $parameterName, $defaultValue) : sprintf('Value for "%s"', $parameterName),
+                'label'       => $defaultValue ? sprintf('Value for "%s", leave blank to use default (current: %s)', $parameterName, $defaultValue) : sprintf('Value for "%s"', $parameterName),
                 'attr'        => [
-                    'placeholder' => $defaultValue ? sprintf('Value for "%s", leave blank for dynamic fallback (current: %s)', $parameterName, $defaultValue) : $parameterName
+                    'placeholder' => $defaultValue ? sprintf('Value for "%s", leave blank to use default (current: %s)', $parameterName, $defaultValue) : $parameterName
                 ],
                 'constraints' => $constraints,
                 'required'    => $defaultValue ? false : true
             ]);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options) {
+        /** @var MenuItemParameter $parameter */
+        $parameter = $form->getData();
+        $view->vars = array_merge($view->vars, [
+            'parameter' => $parameter->getParameter()->getParameter()
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
@@ -219,10 +335,6 @@ class MenuItemParameterType extends AbstractType {
         ])->setRequired([
             'item'
         ]);
-    }
-
-    public function getName() {
-        return 'wucdbm_menu_builder_client_menu_item_parameter';
     }
 
     public function getBlockPrefix() {

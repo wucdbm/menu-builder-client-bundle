@@ -6,7 +6,7 @@
             Menus
         </a>
     </li>
-    {% if menu is defined %}
+    {% if menu is defined and menu.id %}
         <li>
             <a href="{{ path('wucdbm_menu_builder_client_menu_sortable', {id: menu.id}) }}">
                 {{ menu.name }}

@@ -2,6 +2,4 @@
 
 A client for the Menu Builder Bundle
 
-- Feature: Make it possible to completely ignore route parameters such as `_locale`, `_scheme` (maybe `_host`?) and use those from the current environment - a valid use case for that is if a user is browsing the french version of the website, but I want all links on my menu to link to pages in french and not the default fallback to english for instance.
-- BUG: default value for _locale, then select some value - still generates with default value
-- UX: Better handling of route requirements such as asd(ffs|xd)|dasdf - look at fgetcsv
+- UX: We know the route chosen, so we know the controller and the action. Then, we could inspect the action for parameter types. This poses the threat of "Object not found" Exceptions when an entity does not exist, so we have to also read the docblock with the new symfony reader and determine the type. If it is an entity, read entities and return a list. This could potentially lead to shittons of entities fetched, so when fetching the entities, if the repository provided implements SomeRandomMenuBuilderInterface which has one method: getMenuBuilderQueryBuilder, return that, otherwise $repository->createQueryBuilder(); Also, use __toString()

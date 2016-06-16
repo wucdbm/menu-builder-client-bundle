@@ -2,13 +2,24 @@
 {{ form_start(form, {action: action}) }}
 {{ form_errors(form) }}
 {{ form_row(form.name) }}
-{% if form.parameters|length %}
-    {{ form_row(form.parameters) }}
-{% else %}
-    <div class="hidden">
-        {{ form_row(form.parameters) }}
+{% for parameter in form.parameters %}
+    {{ form_errors(parameter) }}
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-6">
+                {{ form_label(parameter.value) }}
+                {{ form_widget(parameter.value) }}
+            </div>
+            <div class="col-xs-6">
+                {{ form_label(parameter.parameter) }}
+                {{ form_widget(parameter.parameter) }}
+            </div>
+        </div>
+        {#{% if '_locale' == parameter.vars.parameter %}#}
+            {#{{ form_row(form.useCurrentLocale) }}#}
+        {#{% endif %}#}
     </div>
-{% endif %}
+{% endfor %}
 <div class="form-group">
     <button type="submit" class="btn btn-default">
         Add Item
