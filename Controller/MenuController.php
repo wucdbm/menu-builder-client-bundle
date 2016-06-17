@@ -38,7 +38,10 @@ class MenuController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/list/list.html.twig', $data);
     }
 
-    public function refreshListRowAction(Menu $menu) {
+    public function refreshListRowAction($id) {
+        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
+
         $data = [
             'menu' => $menu
         ];
@@ -116,7 +119,10 @@ class MenuController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/nestable.html.twig', $data);
     }
 
-    public function refreshNestableAction(Menu $menu) {
+    public function refreshNestableAction($id) {
+        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
+
         $data = [
             'menu' => $menu
         ];
@@ -124,7 +130,10 @@ class MenuController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/nestable/nestable.html.twig', $data);
     }
 
-    public function updateNestableAction(Menu $menu, Request $request) {
+    public function updateNestableAction($id, Request $request) {
+        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
+
         $order = $request->request->get('order');
 
         if (!is_array($order)) {
@@ -183,7 +192,10 @@ class MenuController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/sortable/sortable.html.twig', $data);
     }
 
-    public function updateSortableAction(Menu $menu, Request $request) {
+    public function updateSortableAction($id, Request $request) {
+        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
+
         $order = $request->request->get('order');
 
         if (!is_array($order)) {
@@ -215,7 +227,10 @@ class MenuController extends BaseController {
         }
     }
 
-    public function removeAction(Menu $menu, Request $request) {
+    public function removeAction($id, Request $request) {
+        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
+
         if ($request->isXmlHttpRequest()) {
             if ($menu->getIsSystem()) {
                 return $this->json([
