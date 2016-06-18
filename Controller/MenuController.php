@@ -13,10 +13,9 @@ namespace Wucdbm\Bundle\MenuBuilderClientBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Wucdbm\Bundle\MenuBuilderBundle\Entity\Menu;
 use Wucdbm\Bundle\MenuBuilderBundle\Filter\Menu\MenuFilter;
-use Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\FilterType;
 use Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\CreateType;
+use Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\FilterType;
 use Wucdbm\Bundle\WucdbmBundle\Controller\BaseController;
 
 class MenuController extends BaseController {
@@ -67,13 +66,13 @@ class MenuController extends BaseController {
     }
 
     public function createAction(Request $request) {
-        $menu = new Menu();
+        $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
+        $menu = $manager->create();
         $form = $this->createForm(CreateType::class, $menu);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
             $manager->save($menu);
 
             $route = $this->getParameter('wucdbm_menu_builder_client.order_route');

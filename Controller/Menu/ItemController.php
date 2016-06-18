@@ -21,7 +21,9 @@ use Wucdbm\Bundle\WucdbmBundle\Controller\BaseController;
 
 class ItemController extends BaseController {
 
-    public function chooseRouteAction(Menu $menu, $parentId, Request $request) {
+    public function chooseRouteAction($id, $parentId, Request $request) {
+        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
         $item = new MenuItem();
         $form = $this->createForm(RouteChoiceType::class, $item);
 
@@ -50,10 +52,13 @@ class ItemController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/Item/route_choice/choose.html.twig', $data);
     }
 
-    public function addItemAction(Menu $menu, $routeId, $parentId, Request $request) {
+    public function addItemAction($id, $routeId, $parentId, Request $request) {
+        $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
+        $item = $manager->createItem();
+        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
+        $menu = $repo->findOneById($id);
         $routeRepository = $this->container->get('wucdbm_menu_builder.repo.routes');
         $route = $routeRepository->findOneById($routeId);
-        $item = new MenuItem();
         $item->setRoute($route);
         $item->setMenu($menu);
         $menu->addItem($item);
