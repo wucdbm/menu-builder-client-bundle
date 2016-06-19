@@ -104,11 +104,18 @@ class MenuController extends BaseController {
         return $this->render('@WucdbmMenuBuilderClient/Menu/create/create.html.twig', $data);
     }
 
-    public function nestableAction($id) {
+    public function nestableAction($id, Request $request) {
         $repo = $this->get('wucdbm_menu_builder.repo.menus');
         $menu = $repo->findOneById($id);
 
         $form = $this->createForm(CreateType::class, $menu);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
+            $manager->save($menu);
+        }
 
         $data = [
             'menu' => $menu,
@@ -164,11 +171,18 @@ class MenuController extends BaseController {
         }
     }
 
-    public function sortableAction($id, $class) {
+    public function sortableAction($id, $class, Request $request) {
         $repo = $this->get('wucdbm_menu_builder.repo.menus');
         $menu = $repo->findOneById($id);
 
         $form = $this->createForm(CreateType::class, $menu);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
+            $manager->save($menu);
+        }
 
         $data = [
             'menu'  => $menu,
