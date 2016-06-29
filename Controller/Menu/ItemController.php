@@ -13,7 +13,6 @@ namespace Wucdbm\Bundle\MenuBuilderClientBundle\Controller\Menu;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Wucdbm\Bundle\MenuBuilderBundle\Entity\Menu;
 use Wucdbm\Bundle\MenuBuilderBundle\Entity\MenuItem;
 use Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\Item\MenuItemType;
 use Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\Item\RouteChoiceType;

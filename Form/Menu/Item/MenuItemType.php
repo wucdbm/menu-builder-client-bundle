@@ -109,7 +109,7 @@ class MenuItemType extends AbstractType {
             /** @var MenuItem $item */
             $item = $event->getData();
             $form->add('parameters', CollectionType::class, [
-                'label'         => 'URL Parameters',
+                'label'         => false,
                 // TODO: Make it possible to add custom parameters with custom names?
 //                'allow_add'    => true,
 //                'allow_delete' => true,
