@@ -57,10 +57,10 @@ class MenuController extends BaseController {
             return new Response('Error - Empty value', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        $repo = $this->container->get('wucdbm_menu_builder.repo.menus');
-        $menu = $repo->findOneById($id);
+        $manager = $this->container->get('wucdbm_menu_builder.manager.menus');
+        $menu = $manager->findOneById($id);
         $menu->setName($name);
-        $repo->save($menu);
+        $manager->save($menu);
 
         return new Response();
     }
