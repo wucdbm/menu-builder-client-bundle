@@ -3,6 +3,10 @@
         <div class="col-lg-12">
             <div class="alert alert-info">
                 Your new link has been created
+                <br/>
+                <a href="{{ item|menuItemPath }}" class="btn btn-link" target="_blank">
+                    {{ item.name }}
+                </a>
             </div>
         </div>
     </div>

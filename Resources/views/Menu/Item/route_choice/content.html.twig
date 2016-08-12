@@ -1,0 +1,20 @@
+<ul class="nav nav-tabs" id="tabs" role="tablist">
+    <li role="presentation" class="{{ activeForm == 'route' ? 'active' : '' }}"><a href="#route" role="tab" id="route-tab" data-toggle="tab" aria-controls="route" aria-expanded="true">Application URL</a></li>
+    <li role="presentation" class="{{ activeForm == 'url' ? 'active' : '' }}"><a href="#url" role="tab" id="url-tab" data-toggle="tab" aria-controls="url" aria-expanded="false">External URL</a></li>
+</ul>
+<div class="tab-content" id="tabsContent">
+    <div class="tab-pane fade {{ activeForm == 'route' ? 'active in' : '' }}" role="tabpanel" id="route" aria-labelledby="home-tab">
+        <div class="panel">
+            <div class="panel-body">
+                {% include '@WucdbmMenuBuilderClient/Menu/Item/route_choice/route_form.html.twig' with {form: routeForm} %}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade {{ activeForm == 'url' ? 'active in' : '' }}" role="tabpanel" id="url" aria-labelledby="profile-tab">
+        <div class="panel">
+            <div class="panel-body">
+                {% include '@WucdbmMenuBuilderClient/Menu/Item/route_choice/url_form.html.twig' with {form: urlForm} %}
+            </div>
+        </div>
+    </div>
+</div>

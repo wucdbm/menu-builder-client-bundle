@@ -2,24 +2,26 @@
 {{ form_start(form, {action: action}) }}
 {{ form_errors(form) }}
 {{ form_row(form.name) }}
-{% for parameter in form.parameters %}
-    {{ form_errors(parameter) }}
-    <div class="form-group">
-        <div class="row">
-            <div class="col-xs-6">
-                {{ form_label(parameter.value) }}
-                {{ form_widget(parameter.value) }}
-            </div>
-            <div class="col-xs-6">
-                {{ form_label(parameter.parameter) }}
-                {{ form_widget(parameter.parameter) }}
+{% if form.url is defined %}
+    {{ form_row(form.url) }}
+{% endif %}
+{% if form.parameters is defined %}
+    {% for parameter in form.parameters %}
+        {{ form_errors(parameter) }}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6">
+                    {{ form_label(parameter.value) }}
+                    {{ form_widget(parameter.value) }}
+                </div>
+                <div class="col-xs-6">
+                    {{ form_label(parameter.parameter) }}
+                    {{ form_widget(parameter.parameter) }}
+                </div>
             </div>
         </div>
-        {#{% if '_locale' == parameter.vars.parameter %}#}
-            {#{{ form_row(form.useCurrentLocale) }}#}
-        {#{% endif %}#}
-    </div>
-{% endfor %}
+    {% endfor %}
+{% endif %}
 <div class="form-group">
     <button type="submit" class="btn btn-default">
         Add Item

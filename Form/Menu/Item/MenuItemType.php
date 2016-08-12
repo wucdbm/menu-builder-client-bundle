@@ -11,9 +11,7 @@
 
 namespace Wucdbm\Bundle\MenuBuilderClientBundle\Form\Menu\Item;
 
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -29,10 +27,16 @@ use Wucdbm\Bundle\WucdbmBundle\Form\AbstractType;
 class MenuItemType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder
-            ->add('name', TextType::class, [
-                'label' => 'Display name - this will be displayed as the text of the generated link'
-            ]);
+        $builder->add('name', NameType::class);
+
+        /** @var MenuItem $item */
+        $item = $builder->getData();
+
+        if ($item->getUrl()) {
+            $builder->add('url', UrlType::class);
+
+            return;
+        }
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var MenuItem $item */
@@ -126,17 +130,6 @@ class MenuItemType extends AbstractType {
                     ])
                 ]
             ]);
-
-//            $route = $item->getRoute();
-//            /** @var RouteParameter $parameter */
-//            foreach ($route->getParameters() as $parameter) {
-//                if ('_locale' == $parameter->getParameter()) {
-//                    $form->add('useCurrentLocale', CheckboxType::class, [
-//                        'label' => 'Use the current locale if available'
-//                    ]);
-//                    break;
-//                }
-//            }
         });
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {

@@ -1,0 +1,15 @@
+{% form_theme form '@WucdbmMenuBuilderClient/_shared/form/form_theme.html.twig' %}
+{{ form_start(form, {action: action}) }}
+{{ form_errors(form) }}
+<div class="form-group">
+    {{ form_label(form.route) }}
+    {# This retarded shit here is needed because of the Select2 mastermind that has decided to autosize it to 'width: XYZ px;', rather than letting devs use CSS for that, or simply inherit classes #}
+    {{ form_widget(form.route, {attr: {style: 'width: 100%'}}) }}
+</div>
+{{ form_rest(form) }}
+<div class="form-group">
+    <button type="submit" class="btn btn-default">
+        Select Page
+    </button>
+</div>
+{{ form_end(form) }}
